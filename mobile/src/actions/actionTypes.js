@@ -1,3 +1,3 @@
 export default ActionTypes = {
-    devicesAdd: "DEVICES_ADD"
-}
+  devicesAdd: "DEVICES_ADD",
+};

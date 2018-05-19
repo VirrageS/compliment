@@ -4,7 +4,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
+import MessagesTabBarIcon from '../components/MessagesTabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
+import MessagesScreen from '../screens/MessagesScreen';
 import DevicesScreen from '../screens/DevicesScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
@@ -22,6 +24,21 @@ HomeStack.navigationOptions = {
           ? `ios-information-circle${focused ? '' : '-outline'}`
           : 'md-information-circle'
       }
+    />
+  ),
+};
+
+const MessagesStack = createStackNavigator({
+  Messages: MessagesScreen,
+});
+
+MessagesStack.navigationOptions = {
+  tabBarLabel: 'Messages',
+  tabBarIcon: ({ focused }) => (
+    <MessagesTabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? `ios-text${focused ? '' : '-outline'}` : 'md-text'}
+      count={10}
     />
   ),
 };
@@ -56,6 +73,7 @@ SettingsStack.navigationOptions = {
 
 export default createBottomTabNavigator({
   HomeStack,
+  MessagesStack,
   DevicesStack,
   SettingsStack,
 });
