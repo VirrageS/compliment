@@ -24,7 +24,7 @@ class HomeScreen extends React.Component {
 
   constructor(props) {
     super(props);
-  
+
     this.state = {
       people: [],
     }
@@ -36,7 +36,7 @@ class HomeScreen extends React.Component {
   //     people: list_of_people,
   //   })
   //   // fetch("http://localhost:8000")
-  //   //   .then((response) => { 
+  //   //   .then((response) => {
   //   //     return response.json();
   //   //   })
   //   //   .then((responseJson) => {
@@ -61,7 +61,7 @@ class HomeScreen extends React.Component {
     />
   )
 
-  keyExtractor = (item, index) => index
+  keyExtractor = (item, index) => index.toString();
 
   render() {
     return (

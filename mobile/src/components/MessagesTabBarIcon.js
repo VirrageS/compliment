@@ -5,6 +5,7 @@ import { View, StyleSheet, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 
+
 class MessagesTabBarIcon extends React.Component {
   render() {
     let counter = null;

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
@@ -9,6 +8,8 @@ import HomeScreen from '../screens/HomeScreen';
 import MessagesScreen from '../screens/MessagesScreen';
 import DevicesScreen from '../screens/DevicesScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import MapScreen from '../screens/MapScreen';
+import CreatePinScreen from '../screens/CreatePinScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -57,6 +58,21 @@ DevicesStack.navigationOptions = {
   ),
 };
 
+const MapStack = createStackNavigator({
+  Map: { screen: MapScreen },
+  CreatePin: { screen: CreatePinScreen },
+});
+
+MapStack.navigationOptions = {
+  tabBarLabel: 'Map',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? `ios-map${focused ? '' : '-outline'}` : 'md-map'}
+    />
+  ),
+};
+
 const SettingsStack = createStackNavigator({
   Settings: SettingsScreen,
 });
@@ -76,4 +92,5 @@ export default createBottomTabNavigator({
   MessagesStack,
   DevicesStack,
   SettingsStack,
+  MapStack,
 });
