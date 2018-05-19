@@ -41,7 +41,6 @@ MessagesStack.navigationOptions = {
     <MessagesTabBarIcon
       focused={focused}
       name={Platform.OS === 'ios' ? `ios-text${focused ? '' : '-outline'}` : 'md-text'}
-      dot
     />
   ),
 };

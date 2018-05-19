@@ -9,8 +9,7 @@ import Colors from '../constants/Colors';
 class MessagesTabBarIcon extends React.Component {
   render() {
     let counter = null;
-    const { dot } = this.props;
-    if (dot) {
+    if (count > 0) {
       counter = (
         <View style={styles.counter}></View>
       );
