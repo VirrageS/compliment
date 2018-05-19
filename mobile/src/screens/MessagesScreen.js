@@ -15,7 +15,7 @@ class MessagesScreen extends React.Component {
 
     console.log(messages, messages.size);
     if (messages.size === 0) {
-      return (<View><Text>No new Cheers!</Text></View>);
+      return (<View style={styles.containerEmpty}><Text style={styles.emptyText}>No new Cheers!</Text></View>);
     }
 
     return (
@@ -47,4 +47,18 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#f5f5f5',
   },
+  containerEmpty: {
+    display: 'flex',
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  emptyText: {
+    fontSize: 50,
+    color: 'grey',
+    fontWeight: '200',
+  }
 });

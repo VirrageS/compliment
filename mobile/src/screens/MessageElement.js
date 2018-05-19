@@ -25,6 +25,7 @@ class MessageElement extends React.Component {
     const { desc, emojiName, backgroundColor } = MESSAGES[messageId];
 
     const emoji = nodeEmoji.get(emojiName);
+    
     return (
       <TouchableOpacity onPress={this.handlePress}>
         <View style={styles.senderView}>

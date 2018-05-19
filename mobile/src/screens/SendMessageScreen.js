@@ -10,7 +10,7 @@ class DetailsScreen extends React.Component {
         super(props);
 
         const { navigation } = this.props;
-      
+
         this.state = {
             name: navigation.getParam('name'),
             image: navigation.getParam('image'),
@@ -19,9 +19,9 @@ class DetailsScreen extends React.Component {
 
     renderItem = ({ item }) => (
         <Text 
-          style={styles.listItem}
-          onPress={() => this.sendData(item)}>
-            {nodeEmoji.get(item.emojiName)} {item.desc}
+            style={styles.listItem}
+            onPress={() => this.sendData(item)}>
+                {nodeEmoji.get(item.emojiName)} {item.desc}
         </Text>
       )
     
@@ -30,6 +30,7 @@ class DetailsScreen extends React.Component {
     sendData = (message) => {
       const receiver = this.state.name;
       console.log("receiver = ", receiver, ", message = ", message)
+      this.props.navigation.navigate('Home')
     }
 
     render() {
