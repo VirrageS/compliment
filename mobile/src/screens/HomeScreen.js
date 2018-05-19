@@ -17,92 +17,99 @@ import { HomeScreenStyles as styles } from '../styles/styles';
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    header: null,
+    title: 'People',
   };
+
+  constructor(props) {
+    super(props);
+  
+    this.state = {
+      people: [],
+    }
+  }
+
+  // componentDidMount = () => {
+  //   console.log('wywolane')
+  //   this.setState({
+  //     people: list_of_people,
+  //   })
+  //   // fetch("http://localhost:8000")
+  //   //   .then((response) => { 
+  //   //     return response.json();
+  //   //   })
+  //   //   .then((responseJson) => {
+  //   //     console.log("PEOPLE = ", responseJson.people);
+  //   //     this.setState({
+  //   //       people: responseJson.people,
+  //   //     });
+  //   //   })
+  //   //   .catch((err) => {
+  //   //     console.log(err)
+  //   //   })
+  // }
+
+  renderItem = ({ item }) => (
+    <ListItem
+      roundAvatar
+      title={`${item.name}`}
+      // subtitle={item.subtitle}
+      avatar={{ uri: item.avatar_url }}
+      // hideChevron={true}
+
+    />
+  )
+
+  keyExtractor = (item, index) => index
 
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={
-                __DEV__
-                  ? require('../assets/images/robot-dev.png')
-                  : require('../assets/images/robot-prod.png')
-              }
-              style={styles.welcomeImage}
-            />
-          </View>
-
-          <View style={styles.getStartedContainer}>
-            {/* {this._maybeRenderDevelopmentModeWarning()} */}
-
-            <Text style={styles.getStartedText}>Wellcome in Compliment App</Text>
-
-            {/* <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
-              <MonoText style={styles.codeHighlightText}>screens/HomeScreen.js</MonoText>
-            </View> */}
-
-            <Text style={styles.getStartedText}>
-              Change this text and your app will automatically reload.
-            </Text>
-          </View>
-
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>This is a tab bar. You can edit it in:</Text>
-
-          <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
-            <MonoText style={styles.codeHighlightText}>navigation/MainTabNavigator.js</MonoText>
-          </View>
-        </View>
+        <FlatList
+          keyExtractor={this.keyExtractor}
+          data={list_of_people}
+          renderItem={this.renderItem}
+        />
       </View>
     );
   }
 
-  // _maybeRenderDevelopmentModeWarning() {
-  //   if (__DEV__) {
-  //     const learnMoreButton = (
-  //       <Text onPress={this._handleLearnMorePress} style={styles.helpLinkText}>
-  //         Learn more
-  //       </Text>
-  //     );
-
-  //     return (
-  //       <Text style={styles.developmentModeText}>
-  //         Development mode is enabled, your app will be slower but you can use useful development
-  //         tools. {learnMoreButton}
-  //       </Text>
-  //     );
-  //   } else {
-  //     return (
-  //       <Text style={styles.developmentModeText}>
-  //         You are not in development mode, your app will run at full speed.
-  //       </Text>
-  //     );
-  //   }
-  // }
-
-  _handleLearnMorePress = () => {
-    WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/guides/development-mode');
-  };
-
-  _handleHelpPress = () => {
-    WebBrowser.openBrowserAsync(
-      'https://docs.expo.io/versions/latest/guides/up-and-running.html#can-t-see-your-changes'
-    );
-  };
 }
 
+const list_of_people = [
+  {
+    name: 'Ryszard Andrzejewski',
+    avatar_url: 'https://i.iplsc.com/peja/000769RBHLL8BVIW-C122-F4.jpg',
+    subtitle: 'Vice President'
+  },
+  {
+    name: 'Paweł Poskrobko',
+    avatar_url: 'https://dz2cdn1.dzone.com/storage/user-avatar/1721664-thumb.jpg',
+    subtitle: 'Vice Chairman'
+  },
+  {
+    name: 'Michał Preibisch',
+    avatar_url: 'https://scontent-frx5-1.xx.fbcdn.net/v/t31.0-8/16300260_1228102917257647_6607834940169510280_o.jpg?_nc_cat=0&oh=72103489546a7cfd6c2ed7e99cc665f9&oe=5B87D264',
+    subtitle: 'Vice Chairman'
+  },
+  {
+    name: 'Iwona Pytel',
+    avatar_url: 'https://scontent-frx5-1.xx.fbcdn.net/v/t31.0-1/c150.0.900.900/28827131_1645075322207352_6650747683372023882_o.jpg?_nc_cat=0&oh=f9e704e58e7f2d7edfc75f48810f9309&oe=5B775E4F',
+    subtitle: 'Vice Chairman'
+  },
+  {
+    name: 'Filip Stefaniuk',
+    avatar_url: 'https://scontent-frx5-1.xx.fbcdn.net/v/t1.0-9/11390304_913352588723448_3159420510030916345_n.jpg?_nc_cat=0&oh=4e936ae0cdeae57931b1f32a59ee626b&oe=5B7BC9F0',
+    subtitle: 'Vice Chairman'
+  },
+  {
+    name: 'Michał Pryt',
+    avatar_url: 'https://scontent-frx5-1.xx.fbcdn.net/v/t1.0-9/11393134_704674419661497_8714276351391663038_n.jpg?_nc_cat=0&oh=7411ee9ac8f13371c58e7e32c336a631&oe=5B8895F4',
+    subtitle: 'Vice Chairman'
+  },
+  ]
+
 function mapStateToProps(state) {
-  return { appState: state }
+  return { devices: state.devices }
 }
 
 const mapDispatchToProps = {
@@ -110,3 +117,16 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 15,
+    backgroundColor: '#f5f5f5',
+  },
+  elemContainer: {
+    padding: 10,
+    margin: 3,
+    backgroundColor: '#fff',
+  }
+});
