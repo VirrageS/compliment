@@ -1,12 +1,12 @@
-from django.conf.urls import url, include
-from rest_framework import routers
-from app import views
+from django.conf.urls import url
+from compliment.app import views
 
 
-# Wire up our API using automatic URL routing.
-# Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^users/$', views.user_list),
-    url(r'^users/(?P<pk>[0-9]+)/$', views.user_detail),
+    url(r'^locations/', views.LocationList.as_view()),
+    url(r'^pins/', views.PinList.as_view()),
+    url(r'^users/', views.UserListCreate.as_view()),
+    url(r'^nearby_users/', views.NearbyUsersList.as_view()),
+    url(r'^send_message/$', views.send_message),
+    url(r'^get_messages/(?P<pk>[0-9]+)/$', views.get_messages),
 ]

@@ -1,26 +1,49 @@
 from rest_framework import serializers
-from .models import User, Message
+from app.models import Location, Pin, User, Message
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('auto_id', 'name')
+
+
+class LocationSerializer(serializers.ModelSerializer):
+    user_id = serializers.IntegerField()
+
+    class Meta:
+        model = Location
+        fields = ('auto_id', 'latitude', 'longitude', 'timestamp', 'user_id')
+
+
+class PinSerializer(serializers.ModelSerializer):
+    user_id = serializers.IntegerField()
+
+    class Meta:
+        model = Pin
+        fields = ('text_message', 'latitude', 'longitude', 'time_create', 'duration', 'user_id')
 
 
 class MessageSerializer(serializers.Serializer):
-    class Meta:
-        fields = ['user', 'content', ]
-
-
-class UserSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
-    username = serializers.CharField(required=True, max_length=100)
-    default_message = serializers.CharField(style={'base_template': 'textarea.html'}, required=False)
-    messages = MessageSerializer(many=True)
+    sender_id = serializers.IntegerField()
+    receiver_id = serializers.IntegerField()
+    content = serializers.CharField()
+    send_time = serializers.DateTimeField()
+    longitude = serializers.FloatField()
+    latitude = serializers.FloatField()
 
     def create(self, validated_data):
-        return User.objects.create(**validated_data)
+        print(validated_data)
 
-    def update(self, instance, validated_data):
+        return Message.objects.create(sender_id=validated_data.get('sender_id'),
+                                      receiver_id=validated_data.get('receiver_id'),
+                                      content=validated_data.get('content'),
+                                      send_time=validated_data.get('send_time'),
+                                      longitude=validated_data.get('longitude'),
+                                      latitude=validated_data.get('latitude'),
+                                      seen=False)
 
-        instance.username = validated_data.get('username', instance.username)
-        instance.default_message = validated_data.get('default_message', instance.default_message)
+    def update(self, instance):
+        instance.seen = True
         instance.save()
         return instance
-
-
