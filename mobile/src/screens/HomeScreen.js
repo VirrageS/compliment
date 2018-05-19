@@ -7,7 +7,9 @@ import {
   Text,
   TouchableOpacity,
   View,
+  FlatList,
 } from 'react-native';
+import { ListItem } from 'react-native-elements'
 import { connect } from 'react-redux';
 import { Map } from 'immutable';
 import { WebBrowser } from 'expo';
@@ -118,15 +120,15 @@ const mapDispatchToProps = {
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 15,
-    backgroundColor: '#f5f5f5',
-  },
-  elemContainer: {
-    padding: 10,
-    margin: 3,
-    backgroundColor: '#fff',
-  }
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     paddingTop: 15,
+//     backgroundColor: '#f5f5f5',
+//   },
+//   elemContainer: {
+//     padding: 10,
+//     margin: 3,
+//     backgroundColor: '#fff',
+//   }
+// });
