@@ -3,8 +3,8 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from rest_framework.decorators import api_view
-from app.models import User
-from app.serializers import UserSerializer
+from .models import User, Message
+from .serializers import UserSerializer, MessageSerializer
 
 @csrf_exempt
 @api_view(['GET', 'POST'])
@@ -57,9 +57,18 @@ def user_detail(request, pk):
 def send_message(request):
     data = JSONParser().parse(request)
     try:
-        user = User.objects.get(username=data["username"])
+        sender = User.objects.get(pk=data["sender_id"])
+        receiver = User.objects.get(pk=data["receiver_id"])
     except User.DoesNotExist:
         return HttpResponse(status=404)
+
+    serializer = MessageSerializer(data)
+    if serializer.is_valid():
+        serializer.save()
+        return HttpResponse(status=201)
+
+    return JsonResponse(serializer.errors, status=400)
+
 
     message = Message(username=data["username"], content=data["content"])
     message.save()
