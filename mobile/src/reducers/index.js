@@ -3,6 +3,7 @@ import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 
 import devices from './devices';
 import messages from './messages';
+import map from './map';
 import rootSaga from '../sagas';
 
 import createSagaMiddleware from 'redux-saga'
@@ -10,6 +11,7 @@ import createSagaMiddleware from 'redux-saga'
 const reducer = combineReducers({
   messages,
   devices,
+  map,
 });
 
 const sagaMiddleware = createSagaMiddleware();

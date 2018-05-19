@@ -105,10 +105,17 @@ class MapScreen extends React.Component {
   };
 
   render() {
+
+    console.log(this.props.localPins);
     return (
       <View style={styles.container}>
         <MapView
-          region={this.state.region}
+          initialRegion={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}
           onRegionChange={this.onRegionChange}
           provider={PROVIDER_GOOGLE}
           style={styles.map}
@@ -124,19 +131,28 @@ class MapScreen extends React.Component {
               description={marker.description}
             />
           ))}
+          {this.props.localPins.map(marker => (
+            <Marker
+              key={shortid.generate()}
+              pinColor="green"
+              coordinate={{
+                latitude: marker.latitude,
+                longitude: marker.longitude,
+              }}
+              description={marker.message}
+            />
+          ))}
         </MapView>
-        <View style={styles.buttonContainer}>
-          <View style={styles.bubble}>
-            <Text>Map with Loading</Text>
-          </View>
-        </View>
       </View>
     );
   }
 }
 
 function mapStateToProps(state) {
-  return { devices: state.devices }
+  return {
+    devices: state.devices,
+    localPins: state.map.get('localPins'),
+  }
 }
 
 export default connect(mapStateToProps)(MapScreen);

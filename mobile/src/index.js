@@ -4,10 +4,8 @@ import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
 import { Provider } from 'react-redux';
-import createStore from './reducers';
+import store from './shared/store';
 
-const { store, callback } = createStore();
-callback();
 
 export default class App extends React.Component {
   state = {
