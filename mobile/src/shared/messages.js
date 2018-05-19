@@ -2,61 +2,60 @@ import nodeEmoji from 'node-emoji';
 
 const MESSAGES = {
   0: {
-    desc: 'You are the best',
+    desc: 'You\'re beautiful!',
     backgroundColor: '#ccc',
-    emojiName: 'smile',
+    emojiName: 'heart_eyes',
   },
   1: {
-    desc: 'Smile :)',
+    desc: 'Smile!',
     backgroundColor: '#fff',
     emojiName: 'smile',
   },
   2: {
-    desc: 'Nice',
-    backgroundColor: '#444',
-    emojiName: 'smile',
+    desc: 'Nice gains!',
+    backgroundColor: '#777',
+    emojiName: 'muscle',
   },
   3: {
-    desc: 'That was awesome',
-    backgroundColor: '#555',
-    emojiName: 'smile',
+    desc: 'Brother With Attitude',
+    backgroundColor: '#444',
+    emojiName: 'sunglasses',
   },
   4: {
-    desc: 'That was awesome',
-    backgroundColor: '#555',
-    emojiName: 'smile',
+    desc: 'Cool sneakers!',
+    backgroundColor: '#666',
+    emojiName: 'athletic_shoe',
   },
   5: {
-    desc: 'That was awesome',
-    backgroundColor: '#555',
-    emojiName: 'smile',
+    desc: 'Count this money',
+    backgroundColor: '#999',
+    emojiName: 'dollar',
   },
   6: {
-    desc: 'Smile :)',
-    backgroundColor: '#fff',
-    emojiName: 'smile',
+    desc: 'I brought you flowers',
+    backgroundColor: '#888',
+    emojiName: 'bouquet',
   },
   7: {
-    desc: 'That was awesome',
+    desc: 'Love',
     backgroundColor: '#555',
-    emojiName: 'smile',
+    emojiName: 'heart',
   },
   8: {
-    desc: 'Smile :)',
-    backgroundColor: '#fff',
-    emojiName: 'smile',
+    desc: 'Metalhead',
+    backgroundColor: '#666',
+    emojiName: 'the_horns',
   },
   9: {
-    desc: 'That was awesome',
-    backgroundColor: '#555',
-    emojiName: 'smile',
+    desc: 'Nice hat!',
+    backgroundColor: '#666',
+    emojiName: 'womans_hat',
   },
   10: {
-    desc: 'That was awesome',
-    backgroundColor: '#555',
-    emojiName: 'smile',
+    desc: 'You\'re the best!',
+    backgroundColor: '#444',
+    emojiName: 'star',
   },
-
 };
 
 export default MESSAGES;

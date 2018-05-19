@@ -29,14 +29,11 @@ class HomeScreen extends React.Component {
       time: Date.now(),
       people: [],
     }
+
+    this.fetchPeople()
   }
 
   fetchPeople = () => {
-    // console.log('FETCHIN')
-    this.setState({
-      people: [],
-    })
-
     fetch("http://localhost:8000", {
       method: 'POST',
       body: JSON.stringify({
