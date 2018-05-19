@@ -70,13 +70,6 @@ def send_message(request):
     return JsonResponse(serializer.errors, status=400)
 
 
-    message = Message(username=data["username"], content=data["content"])
-    message.save()
-    user.messages.add(message)
-    user.save()
-
-    return HttpResponse(status=201)
-
 @csrf_exempt
 @api_view(['GET'])
 def get_messages(request, pk):
