@@ -26,29 +26,53 @@ class HomeScreen extends React.Component {
     super(props);
 
     this.state = {
+      time: Date.now(),
       people: [],
     }
   }
 
-  // componentDidMount = () => {
-  //   console.log('wywolane')
-  //   this.setState({
-  //     people: list_of_people,
-  //   })
-  //   // fetch("http://localhost:8000")
-  //   //   .then((response) => {
-  //   //     return response.json();
-  //   //   })
-  //   //   .then((responseJson) => {
-  //   //     console.log("PEOPLE = ", responseJson.people);
-  //   //     this.setState({
-  //   //       people: responseJson.people,
-  //   //     });
-  //   //   })
-  //   //   .catch((err) => {
-  //   //     console.log(err)
-  //   //   })
+  fetchPeople = () => {
+    // console.log('FETCHIN')
+    this.setState({
+      people: [],
+    })
+
+    fetch("http://localhost:8000", {
+      method: 'POST',
+      body: JSON.stringify({
+        user: "1",
+        location: "2"
+      })
+    })
+    .then(() => fetch("http://localhost:8000"))
+    .then((response) => { 
+      return response.json();
+    })
+    .then((responseJson) => {
+      // console.log("PEOPLE = ", responseJson.people);
+      this.setState({
+        people: responseJson.people,
+      });
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
+  // componentDidMount() {
+  //   this.interval = setInterval(() => {
+  //     console.log("updating! date = ", this.state.time)
+  //     this.setState({ time: Date.now() })
+  //   }, 1000);
   // }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  componentDidMount = () => {
+    this.interval = setInterval(this.fetchPeople, 3000)
+  }
 
   renderItem = ({ item }) => (
     <ListItem
@@ -57,7 +81,7 @@ class HomeScreen extends React.Component {
       // subtitle={item.subtitle}
       avatar={{ uri: item.avatar_url }}
       // hideChevron={true}
-      onPress={() => this.props.navigation.navigate('SendMessage')}
+      onPress={() => this.props.navigation.navigate('SendMessage', {name: item.name, image: item.avatar_url})}
     />
   )
 
@@ -68,7 +92,7 @@ class HomeScreen extends React.Component {
       <View style={styles.container}>
         <FlatList
           keyExtractor={this.keyExtractor}
-          data={list_of_people}
+          data={this.state.people}
           renderItem={this.renderItem}
         />
       </View>

@@ -3,61 +3,88 @@ import { StyleSheet, Button, View, Text, ScrollView, Image, FlatList } from 'rea
 import { ListItem } from 'react-native-elements'
 import { StackNavigator } from 'react-navigation';
 import MESSAGES from '../shared/messages';
+import nodeEmoji from 'node-emoji';
 
 class DetailsScreen extends React.Component {
+    constructor(props) {
+        super(props);
+
+        const { navigation } = this.props;
+      
+        this.state = {
+            name: navigation.getParam('name'),
+            image: navigation.getParam('image'),
+        }
+      }
+
     renderItem = ({ item }) => (
-        <ListItem
-          roundAvatar
-          title={`${item.desc}`}
-          avatar={{ uri: item.avatar_url }}
-          hideChevron={true}
-        />
+        <Text 
+          style={styles.listItem}
+          onPress={() => this.sendData(item)}>
+            {nodeEmoji.get(item.emojiName)} {item.desc}
+        </Text>
       )
     
     keyExtractor = (item, index) => index
 
+    sendData = (message) => {
+      const receiver = this.state.name;
+      console.log("receiver = ", receiver, ", message = ", message)
+    }
+
     render() {
+      const name = this.state.name;
+      const image = this.state.image;
+
+      console.log(name, image);
+
       return (
-        <ScrollView alwaysBounceVertical={false}>
+        <ScrollView style={styles.mainContainer} alwaysBounceVertical={false}>
             <View style={{
                     flex: 1,
                     alignItems: 'center',
                     justifyContent: 'center',
                     height: 300,
                     marginTop: 20}}>
-                <Image style={styles.artwork} source={{uri: 'https://i.iplsc.com/peja/000769RBHLL8BVIW-C122-F4.jpg'}} />
-                <Text style={styles.name}>Rychu Peja</Text>
+                <Image style={styles.userImage} source={{uri: image}} />
+                <Text style={styles.username}>{name}</Text>
             </View>
-            <View style={styles.container}>
+            <View style={styles.messageContainer}>
                 <FlatList
-                keyExtractor={this.keyExtractor}
-                data={Object.values(MESSAGES)}
-                renderItem={this.renderItem}
+                    keyExtractor={this.keyExtractor}
+                    data={Object.values(MESSAGES)}
+                    renderItem={this.renderItem}
                 />
             </View>
         </ScrollView>
-        
       );
     }
   }
 
   var styles = StyleSheet.create({  
-    artwork: {
+    mainContainer: {
+        backgroundColor: '#FFF',
+    },
+
+    listItem: {
+        fontSize: 20,
+        padding: 10,
+    },
+
+    messageContainer: {
+        flex: 1,
+        padding: 10,
+    },
+
+    userImage: {
         width: 250,
         height: 250,
         borderRadius: 250/2,
-        marginBottom: 30,
-        borderColor: 'black',
+        marginBottom: 15,
     //   flex: 1
     },
-  
-    artworkContainer: {
-      flex: 1,
-      alignItems: 'stretch',
 
-    },
-
-    name: {
+    username: {
         fontSize: 22,
         fontWeight: '200',
         textAlign: 'center'
