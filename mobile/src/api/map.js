@@ -14,8 +14,8 @@ function sendNewPosition(user, latitude, longitude, timestamp) {
   });
 }
 
-function setMarker(user, latitude, longitude, timestamp, expiration) {
-  return fetch('https://mywebsite.com/marker/', {
+function setMarker(user, message, expiration, latitude, longitude, timestamp) {
+  return fetch('https://google.com/marker/', {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -23,10 +23,11 @@ function setMarker(user, latitude, longitude, timestamp, expiration) {
     },
     body: JSON.stringify({
       user,
+      message,
+      expiration,
       latitude,
       longitude,
       timestamp,
-      expiration,
     }),
   });
 }
