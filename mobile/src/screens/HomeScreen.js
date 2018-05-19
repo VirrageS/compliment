@@ -8,17 +8,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { connect } from 'react-redux';
+import { Map } from 'immutable';
 import { WebBrowser } from 'expo';
-
 import { MonoText } from '../components/StyledText';
-
 import { addDevice } from '../actions/devices';
-
 import { HomeScreenStyles as styles } from '../styles/styles';
-
-import { connect } from 'react-redux'
-
-import { Map } from 'immutable'
 
 class HomeScreen extends React.Component {
   static navigationOptions = {

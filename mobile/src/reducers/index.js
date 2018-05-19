@@ -2,12 +2,14 @@ import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 // import thunk from 'redux-thunk'
 
 import devices from './devices';
+import messages from './messages';
 import rootSaga from '../sagas';
 
 import createSagaMiddleware from 'redux-saga'
 
 const reducer = combineReducers({
-    devices,
+  messages,
+  devices,
 });
 
 const sagaMiddleware = createSagaMiddleware();
