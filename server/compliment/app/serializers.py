@@ -3,20 +3,23 @@ from .models import User, Message
 
 
 class MessageSerializer(serializers.Serializer):
-    sender_id = serializers.PrimaryKeyRelatedField(read_only=True)
-    receiver_id = serializers.PrimaryKeyRelatedField(read_only=True)
+    sender_id = serializers.IntegerField()
+    receiver_id = serializers.IntegerField()
+    content = serializers.CharField()
     send_time = serializers.DateTimeField()
     longitude = serializers.FloatField()
     latitude = serializers.FloatField()
-    seen = serializers.BooleanField()
 
     def create(self, validated_data):
+        print(validated_data)
         sender = User.objects.get(pk=validated_data.get('sender_id'))
         receiver = User.objects.get(pk=validated_data.get('receiver_id'))
+
         return Message.objects.create(sender_id=sender, receiver_id=receiver,
+                               content=validated_data.get('content'),
                                send_time=validated_data.get('send_time'),
                                longitude=validated_data.get('longitude'),
-                               latitude=validated_data.get('latitued'),
+                               latitude=validated_data.get('latitude'),
                                seen=False)
 
     def update(self, instance):

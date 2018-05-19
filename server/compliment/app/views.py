@@ -62,7 +62,7 @@ def send_message(request):
     except User.DoesNotExist:
         return HttpResponse(status=404)
 
-    serializer = MessageSerializer(data)
+    serializer = MessageSerializer(data=data)
     if serializer.is_valid():
         serializer.save()
         return HttpResponse(status=201)
