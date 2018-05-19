@@ -12,10 +12,9 @@ class MessageSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         print(validated_data)
-        sender = User.objects.get(pk=validated_data.get('sender_id'))
-        receiver = User.objects.get(pk=validated_data.get('receiver_id'))
 
-        return Message.objects.create(sender_id=sender, receiver_id=receiver,
+        return Message.objects.create(sender_id=validated_data.get('sender_id'),
+                               receiver_id=validated_data.get('receiver_id'),
                                content=validated_data.get('content'),
                                send_time=validated_data.get('send_time'),
                                longitude=validated_data.get('longitude'),

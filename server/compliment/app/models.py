@@ -10,10 +10,13 @@ class User(models.Model):
         #ordering = ('created',)
 
 class Message(models.Model):
-    sender_id = models.ForeignKey(User, related_name="sender_id")
-    receiver_id = models.ForeignKey(User, related_name="receiver_id")
+    sender_id = models.IntegerField()
+    receiver_id = models.IntegerField()
     content = models.CharField(max_length=250, blank=True)
     send_time = models.DateTimeField() # Default representation: YYYY-MM-DD[T]HH:MM
     longitude = models.FloatField()
     latitude = models.FloatField()
     seen = models.BooleanField(blank=True, default=False)
+
+    def update(self):
+        self.seen = True

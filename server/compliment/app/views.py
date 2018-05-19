@@ -53,6 +53,22 @@ def user_detail(request, pk):
         return HttpResponse(status=204)
 
 @csrf_exempt
+@api_view(['GET'])
+def get_messages(request, pk):
+    try:
+        user = User.objects.get(pk=pk)
+    except User.DoesNotExist:
+        return HttpResponse(status=404)
+
+    messages = Message.objects.all().filter(receiver_id=user.id, seen=False)
+    serializer = MessageSerializer(messages, many=True)
+    for m in messages:
+        m.update()
+        m.save()
+
+    return JsonResponse(serializer.data, safe=False)
+
+@csrf_exempt
 @api_view(['POST'])
 def send_message(request):
     data = JSONParser().parse(request)
@@ -70,11 +86,10 @@ def send_message(request):
     return JsonResponse(serializer.errors, status=400)
 
 
-@csrf_exempt
-@api_view(['GET'])
-def get_messages(request, pk):
-    try:
-        user = User.objects.get(pk=pk)
-    except User.DoesNotExist:
-        return HttpResponse(status=404)
+
+
+
+
+
+
 
