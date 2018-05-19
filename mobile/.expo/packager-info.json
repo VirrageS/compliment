@@ -1,5 +1,11 @@
 {
+<<<<<<< HEAD
   "expoServerPort": 19000,
   "packagerPort": 19001,
   "packagerPid": 16227
+=======
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null
+>>>>>>> add message screen
 }

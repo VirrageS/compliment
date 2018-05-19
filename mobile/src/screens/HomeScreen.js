@@ -57,7 +57,7 @@ class HomeScreen extends React.Component {
       // subtitle={item.subtitle}
       avatar={{ uri: item.avatar_url }}
       // hideChevron={true}
-
+      onPress={() => this.props.navigation.navigate('SendMessage')}
     />
   )
 

@@ -8,15 +8,20 @@ import HomeScreen from '../screens/HomeScreen';
 import MessagesScreen from '../screens/MessagesScreen';
 import DevicesScreen from '../screens/DevicesScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+<<<<<<< HEAD
 import MapScreen from '../screens/MapScreen';
 import CreatePinScreen from '../screens/CreatePinScreen';
+=======
+import SendMessageScreen from '../screens/SendMessageScreen'
+>>>>>>> add message screen
 
 const HomeStack = createStackNavigator({
-  Home: HomeScreen,
+  Home: { screen: HomeScreen },
+  SendMessage: { screen: SendMessageScreen },
 });
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
+  tabBarLabel: 'Home1',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}

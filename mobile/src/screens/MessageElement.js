@@ -4,30 +4,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import shortid from 'shortid';
 import nodeEmoji from 'node-emoji';
 import { removeMessage } from '../actions/messages';
-
-
-const MESSAGES = {
-  0: {
-    desc: 'You are the best',
-    emojiName: 'smile',
-    backgroundColor: '#ccc',
-  },
-  1: {
-    desc: 'Smile :)',
-    emojiName: 'smile',
-    backgroundColor: '#fff',
-  },
-  2: {
-    desc: 'Nice',
-    emojiName: 'smile',
-    backgroundColor: '#444',
-  },
-  3: {
-    desc: 'That was awesome',
-    emojiName: 'smile',
-    backgroundColor: '#555',
-  },
-};
+import MESSAGES from '../shared/messages';
 
 class MessageElement extends React.Component {
   constructor(props) {
