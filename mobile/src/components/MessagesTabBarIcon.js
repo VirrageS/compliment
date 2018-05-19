@@ -8,12 +8,10 @@ import Colors from '../constants/Colors';
 class MessagesTabBarIcon extends React.Component {
   render() {
     let counter = null;
-    const { count } = this.props;
-    if (!_.isNil(count) && count > 0) {
+    const { dot } = this.props;
+    if (dot) {
       counter = (
-        <Text style={styles.counter}>
-          {count}
-        </Text>
+        <View style={styles.counter}></View>
       );
     }
 
@@ -40,9 +38,11 @@ export default connect(mapStateToProps)(MessagesTabBarIcon);
 const styles = StyleSheet.create({
   counter: {
     position: 'absolute',
-    top: -2,
-    right: -8,
-    fontSize: 12,
-    color: 'red',
+    top: -1,
+    right: -7,
+    height: 10,
+    width: 10,
+    borderRadius: 5,
+    backgroundColor: 'red',
   },
 });

@@ -33,12 +33,12 @@ const MessagesStack = createStackNavigator({
 });
 
 MessagesStack.navigationOptions = {
-  tabBarLabel: 'Messages',
+  tabBarLabel: 'Cheers',
   tabBarIcon: ({ focused }) => (
     <MessagesTabBarIcon
       focused={focused}
       name={Platform.OS === 'ios' ? `ios-text${focused ? '' : '-outline'}` : 'md-text'}
-      count={10}
+      dot
     />
   ),
 };

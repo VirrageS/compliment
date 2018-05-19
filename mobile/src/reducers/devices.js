@@ -1,6 +1,6 @@
 import { Map, Set } from 'immutable';
 
-import ActionTypes from '../actions/actionTypes';
+import ACTION_TYPES from '../actions/actionTypes';
 
 const initialState = Map({
   old: Set([1]),
@@ -8,12 +8,11 @@ const initialState = Map({
 });
 
 export default function reducer(state = initialState, action) {
-    console.log('devices action!: ', action);
-    switch (action.type) {
-        case ActionTypes.devicesAdd:
-            const updatedNew = state.get('new').add(action.id);
-            return state.set('new', updatedNew);
-        default:
-            return state;
+  switch (action.type) {
+    case ACTION_TYPES.devicesAdd:
+      const updatedNew = state.get('new').add(action.id);
+      return state.set('new', updatedNew);
+    default:
+      return state;
   }
 }
