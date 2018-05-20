@@ -20,7 +20,7 @@ class MapScreen extends React.Component {
         <Ionicons
           name={Platform.OS === 'ios' ? 'ios-add' : 'md-add'}
           size={35}
-          style={{ marginLeft: -30 }}
+          style={{ marginLeft: -35 }}
           color={Colors.tintColor}
         />
       </TouchableOpacity>
@@ -43,11 +43,9 @@ class MapScreen extends React.Component {
         longitudeDelta: 0.0421,
       },
       markers: [
-        { cord: { latitude: 37.78325, longitude: -122.4324 }, title: 'Siema', description: 'Zajebiście' },
-        { cord: { latitude: 37.78125, longitude: -122.4334 }, title: 'Siema', description: 'Zajebiście' },
-        { cord: { latitude: 37.78225, longitude: -122.4344 }, title: 'Siema', description: 'Zajebiście' },
-        { cord: { latitude: 37.78525, longitude: -122.4364 }, title: 'Siema', description: 'Zajebiście' },
-        { cord: { latitude: 37.78025, longitude: -122.4314 }, title: 'Siema', description: 'Zajebiście' },
+        { cord: { latitude: 37.78325, longitude: -122.4324 }, title: 'Mike Djeb', description: 'LOST WALLET!!' },
+        { cord: { latitude: 37.78455, longitude: -122.4354 }, title: 'TEDE', description: 'Skrrrrtt!' },
+        { cord: { latitude: 37.78025, longitude: -122.4314 }, title: 'Gal Gadot', description: 'Looking for handsome, blond guy with funny hat.' },
       ],
     };
 
@@ -105,8 +103,6 @@ class MapScreen extends React.Component {
   };
 
   render() {
-
-    console.log(this.props.localPins);
     return (
       <View style={styles.container}>
         <MapView
