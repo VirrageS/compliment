@@ -21,7 +21,7 @@ class DetailsScreen extends React.Component {
         <Text 
             style={styles.listItem}
             onPress={() => this.sendData(item)}>
-                {nodeEmoji.get(item.emojiName)} {item.desc}
+            {nodeEmoji.get(item.emojiName)} {item.desc}
         </Text>
       )
     
@@ -29,7 +29,19 @@ class DetailsScreen extends React.Component {
 
     sendData = (message) => {
       const receiver = this.state.name;
-      console.log("receiver = ", receiver, ", message = ", message)
+      console.log("receiver = ", receiver, ", message = ", message.tagId)
+      fetch("http://localhost:8000", {
+        method: 'POST',
+        body: JSON.stringify({
+          user: "user",
+          receiver: receiver,
+          message: message.tagId,
+        })
+      })
+      .then((response) => { 
+        console.log("Sent. receiver = ", receiver, ", message = ", message.tagId)
+      })
+
       this.props.navigation.navigate('Home')
     }
 
