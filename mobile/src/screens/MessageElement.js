@@ -21,16 +21,16 @@ class MessageElement extends React.Component {
   }
 
   render() {
-    const { messageId, index } = this.props;
-    const { desc, emojiName, backgroundColor } = MESSAGES[messageId];
+    const { message, index } = this.props;
+    const { desc, emojiName, backgroundColor } = MESSAGES[message.tagId];
 
     const emoji = nodeEmoji.get(emojiName);
-    
+
     return (
       <TouchableOpacity onPress={this.handlePress}>
         <View style={styles.senderView}>
-          <Image style={styles.userImage} source={{uri: 'https://i.iplsc.com/peja/000769RBHLL8BVIW-C122-F4.jpg'}} />
-          <Text style={styles.senderText}>Ryszard Andrzejewski:</Text>
+          <Image style={styles.userImage} source={{ uri: message.url }} />
+          <Text style={styles.senderText}>{message.from}:</Text>
         </View>
         <View
           key={shortid.generate()}
@@ -43,7 +43,7 @@ class MessageElement extends React.Component {
           ]}
         >
         <Text style={styles.emoji}>{emoji}</Text>
-        <Text style={styles.emojiText} key={`text${messageId}`}>
+        <Text style={styles.emojiText} key={`text${message.tagId}`}>
           {desc}
         </Text>
         </View>

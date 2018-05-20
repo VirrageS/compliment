@@ -13,17 +13,16 @@ class MessagesScreen extends React.Component {
   render() {
     const { messages } = this.props;
 
-    console.log(messages, messages.size);
     if (messages.size === 0) {
       return (<View style={styles.containerEmpty}><Text style={styles.emptyText}>No new Cheers!</Text></View>);
     }
 
     return (
       <View style={styles.container}>
-        {messages.map((messageId, index) => (
+        {messages.map((message, index) => (
           <MessageElement
             key={shortid.generate()}
-            messageId={messageId}
+            message={message}
             index={index}
           />
         ))}

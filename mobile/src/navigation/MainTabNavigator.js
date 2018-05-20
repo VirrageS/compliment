@@ -91,7 +91,7 @@ SettingsStack.navigationOptions = {
 export default createBottomTabNavigator({
   HomeStack,
   MessagesStack,
-  DevicesStack,
-  SettingsStack,
+  // DevicesStack,
+  // SettingsStack,
   MapStack,
 });

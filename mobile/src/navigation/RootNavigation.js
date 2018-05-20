@@ -3,7 +3,9 @@ import { Notifications } from 'expo';
 import { createSwitchNavigator } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';
+import messagesApi from '../api/messages';
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
+import { addMessage } from '../actions/messages';
 
 const AppNavigator = createSwitchNavigator({
   // You could add another route here for authentication.
@@ -14,10 +16,31 @@ const AppNavigator = createSwitchNavigator({
 export default class RootNavigation extends React.Component {
   componentDidMount() {
     this._notificationSubscription = this._registerForPushNotifications();
+
+    this.timestamp = 0;
+    this.refreshInterval = setInterval(() => {
+      messagesApi.getMessages('user', this.timestamp)
+        .then((messages) => {
+          let lowestTimestamp = Number.MAX_SAFE_INTEGER;
+          messages.map((message) => {
+            if (message.timestamp < lowestTimestamp) {
+              lowestTimestamp = message.timestamp;
+            }
+
+            store.dispatch(addMessage(message));
+          });
+
+          if (lowestTimestamp !== Number.MAX_SAFE_INTEGER) {
+            this.timestamp = lowestTimestamp;
+          }
+        })
+        .catch(() => {});
+    });
   }
 
   componentWillUnmount() {
     this._notificationSubscription && this._notificationSubscription.remove();
+    clearInterval(this.refreshInterval);
   }
 
   render() {
