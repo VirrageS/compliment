@@ -35,7 +35,7 @@ export default class RootNavigation extends React.Component {
           }
         })
         .catch(() => {});
-    });
+    }, 5000);
   }
 
   componentWillUnmount() {
