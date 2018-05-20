@@ -48,33 +48,51 @@ class NearbyUsersList(APIView):
 
 @csrf_exempt
 @api_view(['GET'])
-def get_messages(request, pk):
+def get_messages(request):
+    pk = request.GET['user']
+    timestamp = request.GET['timestamp']
+
     try:
         user = User.objects.get(pk=pk)
     except User.DoesNotExist:
         return HttpResponse(status=404)
 
-    messages = Message.objects.all().filter(receiver_id=user.auto_id, seen=False)
+    messages = Message.objects.all().filter(receiver_id=user.auto_id, seen=False, send_time__gt=timestamp)
     serializer = MessageSerializer(messages, many=True)
     for m in messages:
         m.update()
         m.save()
 
+    for message in serializer.data:
+        user_id = message['sender_id']
+        user = User.objects.get(pk=user_id)
+        message['name'] = user.name
+        message['photo'] = user.photo
+
     return JsonResponse(serializer.data, safe=False)
 
 @csrf_exempt
 @api_view(['GET'])
-def get_broadcast_messages(request, pk):
+def get_broadcast_messages(request):
+    pk = request.GET['user']
+    timestamp = request.GET['timestamp']
+
     try:
         user = User.objects.get(pk=pk)
     except User.DoesNotExist:
         return HttpResponse(status=404)
 
-    messages = BroadcastMessage.objects.all().filter(receiver_id=user.auto_id, seen=False)
+    messages = BroadcastMessage.objects.all().filter(receiver_id=user.auto_id, seen=False, send_time__gt=timestamp)
     serializer = BroadcastMessageSerializer(messages, many=True)
     for m in messages:
         m.update()
         m.save()
+
+    for message in serializer.data:
+        user_id = message['sender_id']
+        user = User.objects.get(pk=user_id)
+        message['name'] = user.name
+        message['photo'] = user.photo
 
     return JsonResponse(serializer.data, safe=False)
 
@@ -83,6 +101,7 @@ def get_broadcast_messages(request, pk):
 @api_view(['POST'])
 def send_message(request):
     data = JSONParser().parse(request)
+
     try:
         sender = User.objects.get(pk=data["sender_id"])
         receiver = User.objects.get(pk=data["receiver_id"])
@@ -96,6 +115,22 @@ def send_message(request):
 
     return JsonResponse(serializer.errors, status=400)
 
-# @csrf_exempt
-# @api_view(['POST'])
-# TODO
+
+@csrf_exempt
+@api_view(['POST'])
+def send_broadcast_message(request):
+    data = JSONParser().parse(request)
+
+    try:
+        sender = User.objects.get(pk=data["sender_id"])
+    except User.DoesNotExist:
+        return HttpResponse(status=404)
+
+    data["receiver_id"] = 1
+
+    serializer = BroadcastMessageSerializer(data=data)
+    if serializer.is_valid():
+        serializer.save()
+        return HttpResponse(status=201)
+
+    return JsonResponse(serializer.errors, status=400)

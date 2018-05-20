@@ -9,8 +9,9 @@ export const removeMessage = () => ({
   type: ACTION_TYPES.removeMessage,
 });
 
-export const addBroadcastMessage = () => ({
+export const addBroadcastMessage = (message) => ({
   type: ACTION_TYPES.addBroadcastMessage,
+  message,
 })
 
 export const removeBroadcastMessage = () => ({

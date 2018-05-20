@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from app.models import Location, Pin, User, Message
+from app.models import Location, Pin, User, Message, BroadcastMessage
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -42,7 +42,7 @@ class BroadcastMessageSerializer(serializers.ModelSerializer):
     receiver_id = serializers.IntegerField()
 
     class Meta:
-        model = Message
+        model = BroadcastMessage
         fields = ('sender_id', 'receiver_id', 'content', 'send_time', 'seen')
 
     def update(self, instance):

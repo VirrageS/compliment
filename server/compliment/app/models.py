@@ -24,7 +24,7 @@ class Pin(models.Model):
 class BroadcastMessage(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='senderBroadcast')
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='receiverBroadcast')
-    content = models.CharField(max_length=250, blank=True)
+    content = models.CharField(max_length=250)
     send_time = models.DateTimeField(auto_now_add=True)
     seen = models.BooleanField(blank=True, default=False)
 

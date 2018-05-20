@@ -1,5 +1,5 @@
 function getMessages(user, timestamp) {
-  return fetch(`https://google.com/messages?user=${user}&timestamp=${timestamp}`, {
+  return fetch(`http://localhost:8080/messages/?user=${user}&timestamp=${timestamp}`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
@@ -9,7 +9,7 @@ function getMessages(user, timestamp) {
 }
 
 function getBroadcastMessages(user, timestamp) {
-  return fetch(`https://google.com/messages/broadcast?user=${user}&timestamp=${timestamp}`, {
+  return fetch(`http://localhost:8080/broadcast_messages/?user=${user}&timestamp=${timestamp}`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',

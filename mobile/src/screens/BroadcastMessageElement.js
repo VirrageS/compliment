@@ -24,8 +24,8 @@ class BroadcastMessageElement extends React.Component {
       <TouchableOpacity onPress={this.handlePress}>
         <View style={[ styles.container, { zIndex: -index } ]}>
           <View style={styles.senderView}>
-            <Image style={styles.userImage} source={{ uri: message.url }} />
-            <Text style={styles.senderText}>{message.from}:</Text>
+            <Image style={styles.userImage} source={{ uri: message.photo }} />
+            <Text style={styles.senderText}>{message.name}:</Text>
           </View>
           <View style={styles.contentContainer}>
             <Text style={styles.messageText}>

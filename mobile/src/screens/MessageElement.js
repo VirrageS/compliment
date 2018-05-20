@@ -28,14 +28,14 @@ class MessageElement extends React.Component {
 
     return (
       <TouchableOpacity onPress={this.handlePress}>
-        <View style={[ styles.container, { zIndex: -index, backgroundColor }]}>
+        <View style={[ styles.container, { zIndex: -index }]}>
           <View style={styles.senderView}>
-            <Image style={styles.userImage} source={{ uri: message.url }} />
-            <Text style={styles.senderText}>{message.from}:</Text>
+            <Image style={styles.userImage} source={{ uri: message.photo }} />
+            <Text style={styles.senderText}>{message.name}:</Text>
           </View>
           <View
             key={shortid.generate()}
-            style={[ styles.contentContainer, { backgroundColor } ]}
+            style={[ styles.contentContainer ]}
           >
             <Text style={styles.emoji}>{emoji}</Text>
             <Text style={styles.emojiText} key={`text${message.tagId}`}>

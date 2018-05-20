@@ -12,6 +12,7 @@ class DetailsScreen extends React.Component {
         const { navigation } = this.props;
 
         this.state = {
+            id: navigation.getParam('id'),
             name: navigation.getParam('name'),
             image: navigation.getParam('image'),
         }
@@ -31,12 +32,12 @@ class DetailsScreen extends React.Component {
       const receiver = this.state.id;
 
       console.log("receiver = ", receiver, ", message = ", message.tagId)
-      fetch("http://localhost:8000", {
+      fetch("http://localhost:8080/send_message/", {
         method: 'POST',
         body: JSON.stringify({
-          user: "user",
-          receiver: receiver,
-          message: message.tagId,
+          sender_id: 1,
+          receiver_id: receiver,
+          tag_id: message.tagId,
         })
       })
       .then((response) => { 

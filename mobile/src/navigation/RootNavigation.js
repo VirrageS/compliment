@@ -1,11 +1,13 @@
+import moment from 'moment';
 import React from 'react';
 import { Notifications } from 'expo';
 import { createSwitchNavigator } from 'react-navigation';
-
 import MainTabNavigator from './MainTabNavigator';
 import messagesApi from '../api/messages';
+import store from '../shared/store';
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
 import { addMessage, addBroadcastMessage } from '../actions/messages';
+
 
 const AppNavigator = createSwitchNavigator({
   // You could add another route here for authentication.
@@ -17,40 +19,46 @@ export default class RootNavigation extends React.Component {
   componentDidMount() {
     this._notificationSubscription = this._registerForPushNotifications();
 
-    this.normalMessageTimestamp = 0;
-    this.broadcastMessageTimestamp = 0;
+    this.normalMessageTimestamp = moment.unix(0).unix();
+    this.broadcastMessageTimestamp = moment.unix(0).unix();
     this.refreshInterval = setInterval(() => {
-      messagesApi.getMessages('user', this.normalMessageTimestamp)
+      messagesApi.getMessages(1, moment.unix(this.normalMessageTimestamp).toISOString())
+        .then((messages) => messages.json())
         .then((messages) => {
-          let lowestTimestamp = Number.MAX_SAFE_INTEGER;
-          messages.map((message) => {
-            if (message.timestamp < lowestTimestamp) {
-              lowestTimestamp = message.timestamp;
+          let highestTimestamp = moment.unix(0).unix();
+          messages.forEach((message) => {
+            if (moment(message.send_time).unix() > highestTimestamp) {
+              highestTimestamp = moment(message.send_time).unix();
             }
-
-            store.dispatch(addMessage(message));
           });
 
-          if (lowestTimestamp !== Number.MAX_SAFE_INTEGER) {
-            this.normalMessageTimestamp = lowestTimestamp;
+          if (highestTimestamp !== moment.unix(0).unix()) {
+            this.normalMessageTimestamp = highestTimestamp;
           }
+
+          messages.forEach((message) => {
+            store.dispatch(addMessage(message));
+          });
         })
         .catch(() => {});
 
-      messagesApi.getBroadcastMessages('user', this.broadcastMessageTimestamp)
+      messagesApi.getBroadcastMessages(1, moment.unix(this.broadcastMessageTimestamp).toISOString())
+        .then((broadcastMessages) => broadcastMessages.json())
         .then((broadcastMessages) => {
-          let lowestTimestamp = Number.MAX_SAFE_INTEGER;
-          broadcastMessages.map((broadcastMessage) => {
-            if (broadcastMessage.timestamp < lowestTimestamp) {
-              lowestTimestamp = broadcastMessage.timestamp;
+          let highestTimestamp = moment.unix(0).unix();
+          broadcastMessages.forEach((broadcastMessage) => {
+            if (moment(broadcastMessage.send_time).unix() > highestTimestamp) {
+              highestTimestamp = moment(broadcastMessage.send_time).unix();
             }
-
-            store.dispatch(addBroadcastMessage(broadcastMessage));
           });
 
-          if (lowestTimestamp !== Number.MAX_SAFE_INTEGER) {
-            this.broadcastMessageTimestamp = lowestTimestamp;
+          if (highestTimestamp !== moment.unix(0).unix()) {
+            this.broadcastMessageTimestamp = highestTimestamp;
           }
+
+          broadcastMessages.forEach((broadcastMessage) => {
+            store.dispatch(addBroadcastMessage(broadcastMessage));
+          });
         })
         .catch(() => {});
     }, 5000);
