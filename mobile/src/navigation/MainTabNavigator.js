@@ -11,10 +11,12 @@ import SettingsScreen from '../screens/SettingsScreen';
 import MapScreen from '../screens/MapScreen';
 import CreatePinScreen from '../screens/CreatePinScreen';
 import SendMessageScreen from '../screens/SendMessageScreen'
+import BroadcastScreen from '../screens/BroadcastScreen'
 
 const HomeStack = createStackNavigator({
   Home: { screen: HomeScreen },
   SendMessage: { screen: SendMessageScreen },
+  Broadcast: { screen: BroadcastScreen },
 });
 
 HomeStack.navigationOptions = {

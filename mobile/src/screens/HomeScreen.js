@@ -16,11 +16,25 @@ import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
 import { addDevice } from '../actions/devices';
 import { HomeScreenStyles as styles } from '../styles/styles';
+import { Ionicons } from '@expo/vector-icons';
+import Colors from '../constants/Colors';
 
 class HomeScreen extends React.Component {
-  static navigationOptions = {
+  static navigationOptions = ({navigation}) => ({
     title: 'People',
-  };
+    headerRight: (
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Broadcast')}
+      >
+      <Ionicons
+        name={Platform.OS === 'ios' ? 'ios-megaphone' : 'md-megaphone'}
+        size={25}
+        style={{ marginLeft: -35 }}
+        color={Colors.tintColor}
+      />
+      </TouchableOpacity>
+    ),
+  });
 
   constructor(props) {
     super(props);

@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from compliment.app import views
+from app import views
 
 
 urlpatterns = [
