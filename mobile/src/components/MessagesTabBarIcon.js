@@ -30,7 +30,9 @@ class MessagesTabBarIcon extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { count: state.messages.size };
+  return {
+    count: state.messages.get('normal').size + state.messages.get('broadcast').size,
+  };
 }
 
 export default connect(mapStateToProps)(MessagesTabBarIcon);

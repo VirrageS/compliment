@@ -5,7 +5,7 @@ import { createSwitchNavigator } from 'react-navigation';
 import MainTabNavigator from './MainTabNavigator';
 import messagesApi from '../api/messages';
 import registerForPushNotificationsAsync from '../api/registerForPushNotificationsAsync';
-import { addMessage } from '../actions/messages';
+import { addMessage, addBroadcastMessage } from '../actions/messages';
 
 const AppNavigator = createSwitchNavigator({
   // You could add another route here for authentication.
@@ -17,9 +17,10 @@ export default class RootNavigation extends React.Component {
   componentDidMount() {
     this._notificationSubscription = this._registerForPushNotifications();
 
-    this.timestamp = 0;
+    this.normalMessageTimestamp = 0;
+    this.broadcastMessageTimestamp = 0;
     this.refreshInterval = setInterval(() => {
-      messagesApi.getMessages('user', this.timestamp)
+      messagesApi.getMessages('user', this.normalMessageTimestamp)
         .then((messages) => {
           let lowestTimestamp = Number.MAX_SAFE_INTEGER;
           messages.map((message) => {
@@ -31,7 +32,24 @@ export default class RootNavigation extends React.Component {
           });
 
           if (lowestTimestamp !== Number.MAX_SAFE_INTEGER) {
-            this.timestamp = lowestTimestamp;
+            this.normalMessageTimestamp = lowestTimestamp;
+          }
+        })
+        .catch(() => {});
+
+      messagesApi.getBroadcastMessages('user', this.broadcastMessageTimestamp)
+        .then((broadcastMessages) => {
+          let lowestTimestamp = Number.MAX_SAFE_INTEGER;
+          broadcastMessages.map((broadcastMessage) => {
+            if (broadcastMessage.timestamp < lowestTimestamp) {
+              lowestTimestamp = broadcastMessage.timestamp;
+            }
+
+            store.dispatch(addBroadcastMessage(broadcastMessage));
+          });
+
+          if (lowestTimestamp !== Number.MAX_SAFE_INTEGER) {
+            this.broadcastMessageTimestamp = lowestTimestamp;
           }
         })
         .catch(() => {});

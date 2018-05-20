@@ -6,5 +6,13 @@ export const addMessage = (message) => ({
 });
 
 export const removeMessage = () => ({
-  type: ACTION_TYPES.messagesRemove,
+  type: ACTION_TYPES.removeMessage,
 });
+
+export const addBroadcastMessage = () => ({
+  type: ACTION_TYPES.addBroadcastMessage,
+})
+
+export const removeBroadcastMessage = () => ({
+  type: ACTION_TYPES.removeBroadcastMessage,
+})

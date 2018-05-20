@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import shortid from 'shortid';
 import MessageElement from './MessageElement';
+import BroadcastMessageElement from './BroadcastMessageElement';
 
 
 class MessagesScreen extends React.Component {
@@ -11,16 +12,27 @@ class MessagesScreen extends React.Component {
   };
 
   render() {
-    const { messages } = this.props;
+    const { normalMessages, broadcastMessages } = this.props;
 
-    if (messages.size === 0) {
-      return (<View style={styles.containerEmpty}><Text style={styles.emptyText}>No new Cheers!</Text></View>);
+    if (normalMessages.size === 0 && broadcastMessages.size === 0) {
+      return (
+        <View style={styles.containerEmpty}>
+          <Text style={styles.emptyText}>No new Cheers!</Text>
+        </View>
+      );
     }
 
     return (
       <View style={styles.container}>
-        {messages.map((message, index) => (
+        {normalMessages.map((message, index) => (
           <MessageElement
+            key={shortid.generate()}
+            message={message}
+            index={index}
+          />
+        ))}
+        {broadcastMessages.map((message, index) => (
+          <BroadcastMessageElement
             key={shortid.generate()}
             message={message}
             index={index}
@@ -32,7 +44,10 @@ class MessagesScreen extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { messages: state.messages };
+  return {
+    normalMessages: state.messages.get('normal'),
+    broadcastMessages: state.messages.get('broadcast'),
+  };
 }
 
 export default connect(mapStateToProps)(MessagesScreen);

@@ -1,13 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
-import shortid from 'shortid';
-import nodeEmoji from 'node-emoji';
-import { removeMessage } from '../actions/messages';
-import MESSAGES from '../shared/messages';
-import { ListItem } from 'react-native-elements'
+import { removeBroadcastMessage } from '../actions/messages';
 
-class MessageElement extends React.Component {
+
+class BroadcastMessageElement extends React.Component {
   constructor(props) {
     super(props);
 
@@ -17,29 +14,22 @@ class MessageElement extends React.Component {
   }
 
   handlePress = () => {
-    this.props.dispatch(removeMessage());
+    this.props.dispatch(removeBroadcastMessage());
   }
 
   render() {
     const { message, index } = this.props;
-    const { desc, emojiName, backgroundColor } = MESSAGES[message.tagId];
-
-    const emoji = nodeEmoji.get(emojiName);
 
     return (
       <TouchableOpacity onPress={this.handlePress}>
-        <View style={[ styles.container, { zIndex: -index, backgroundColor }]}>
+        <View style={[ styles.container, { zIndex: -index } ]}>
           <View style={styles.senderView}>
             <Image style={styles.userImage} source={{ uri: message.url }} />
             <Text style={styles.senderText}>{message.from}:</Text>
           </View>
-          <View
-            key={shortid.generate()}
-            style={[ styles.contentContainer, { backgroundColor } ]}
-          >
-            <Text style={styles.emoji}>{emoji}</Text>
-            <Text style={styles.emojiText} key={`text${message.tagId}`}>
-              {desc}
+          <View style={styles.contentContainer}>
+            <Text style={styles.messageText}>
+              {message.content}
             </Text>
           </View>
         </View>
@@ -52,7 +42,7 @@ function mapStateToProps(state) {
   return { messages: state.messages };
 }
 
-export default connect(mapStateToProps)(MessageElement);
+export default connect(mapStateToProps)(BroadcastMessageElement);
 
 
 const styles = StyleSheet.create({
@@ -77,18 +67,13 @@ const styles = StyleSheet.create({
     borderRadius: 50/2,
   },
   contentContainer: {
+    marginTop: 80,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  emoji: {
-    marginTop: 30,
-    fontSize: 300,
-  },
-  emojiText: {
-    fontSize: 40,
+  messageText: {
+    fontSize: 45,
     fontWeight: '200',
-    alignSelf: 'center',
-    color: '#000',
   },
 });
 
