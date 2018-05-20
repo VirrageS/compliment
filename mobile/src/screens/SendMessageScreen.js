@@ -28,7 +28,8 @@ class DetailsScreen extends React.Component {
     keyExtractor = (item, index) => index
 
     sendData = (message) => {
-      const receiver = this.state.name;
+      const receiver = this.state.id;
+
       console.log("receiver = ", receiver, ", message = ", message.tagId)
       fetch("http://localhost:8000", {
         method: 'POST',

@@ -1,5 +1,5 @@
-from app.models import Location, Pin, User, Message
-from app.serializers import LocationSerializer, PinSerializer, UserSerializer, MessageSerializer
+from app.models import Location, Pin, User, Message, BroadcastMessage
+from app.serializers import LocationSerializer, PinSerializer, UserSerializer, MessageSerializer, BroadcastMessageSerializer
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import generics
@@ -26,12 +26,12 @@ class PinList(generics.ListCreateAPIView):
 
 
 class NearbyUsersList(APIView):
-
     def get(self, request, format=None):
 
-        dist = float(request.GET['dist'])
+        dist = 300.0
         user_id = request.GET['user_id']
         user_loc = Location.objects.filter(user_id=user_id).latest('timestamp')
+        print(user_loc)
 
         users = User.objects.all().exclude(auto_id=user_id)
         locations = [Location.objects.filter(user=user).latest('timestamp') for user in users]
@@ -62,6 +62,22 @@ def get_messages(request, pk):
 
     return JsonResponse(serializer.data, safe=False)
 
+@csrf_exempt
+@api_view(['GET'])
+def get_broadcast_messages(request, pk):
+    try:
+        user = User.objects.get(pk=pk)
+    except User.DoesNotExist:
+        return HttpResponse(status=404)
+
+    messages = BroadcastMessage.objects.all().filter(receiver_id=user.auto_id, seen=False)
+    serializer = BroadcastMessageSerializer(messages, many=True)
+    for m in messages:
+        m.update()
+        m.save()
+
+    return JsonResponse(serializer.data, safe=False)
+
 
 @csrf_exempt
 @api_view(['POST'])
@@ -79,3 +95,7 @@ def send_message(request):
         return HttpResponse(status=201)
 
     return JsonResponse(serializer.errors, status=400)
+
+# @csrf_exempt
+# @api_view(['POST'])
+# TODO

@@ -8,5 +8,6 @@ urlpatterns = [
     url(r'^users/', views.UserListCreate.as_view()),
     url(r'^nearby_users/', views.NearbyUsersList.as_view()),
     url(r'^send_message/$', views.send_message),
-    url(r'^get_messages/(?P<pk>[0-9]+)/$', views.get_messages),
+    url(r'^get_messages/(?P<pk>\d+)/$', views.get_messages),
+    url(r'^get_broadcast_messages/(?P<pk>\d+)/$', views.get_broadcast_messages),
 ]

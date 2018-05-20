@@ -48,21 +48,26 @@ class HomeScreen extends React.Component {
   }
 
   fetchPeople = () => {
-    fetch("http://localhost:8000", {
+    fetch("http://localhost:8080/locations/", {
       method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({
-        user: "1",
-        location: "2"
+        user_id: 1,
+        latitude: 37.78325,
+        longitude: -122.4324,
       })
     })
-    .then(() => fetch("http://localhost:8000"))
+    .then(() => fetch("http://localhost:8080/nearby_users/?user_id=1"))
     .then((response) => { 
       return response.json();
     })
     .then((responseJson) => {
-      // console.log("PEOPLE = ", responseJson.people);
+      // console.log("PEOPLE = ", responseJson);
       this.setState({
-        people: responseJson.people,
+        people: responseJson,
       });
     })
     .catch((err) => {
@@ -90,9 +95,9 @@ class HomeScreen extends React.Component {
       roundAvatar
       title={`${item.name}`}
       // subtitle={item.subtitle}
-      avatar={{ uri: item.avatar_url }}
+      avatar={{ uri: item.photo }}
       // hideChevron={true}
-      onPress={() => this.props.navigation.navigate('SendMessage', {name: item.name, image: item.avatar_url})}
+      onPress={() => this.props.navigation.navigate('SendMessage', {name: item.name, id: item.auto_id, image: item.photo})}
     />
   )
 

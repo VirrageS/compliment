@@ -1,6 +1,8 @@
 node_modules
 node_modules/*
 
+server/compliment/app/migrations/*
+
 .DS_Store
 .pyc
 
